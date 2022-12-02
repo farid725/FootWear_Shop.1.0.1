@@ -1,11 +1,25 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:footwear_shop/db/main2.dart';
+import 'package:footwear_shop/db/main3.dart';
+import 'package:footwear_shop/main.dart';
+import 'package:sqflite/sqflite.dart';
 
 class AdminPage extends StatelessWidget {
   const AdminPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController nameContr = TextEditingController();
+    TextEditingController priceContr = TextEditingController();
+    TextEditingController exContr = TextEditingController();
+   void sentDB()async{
+      Model model = Model(nameContr.text, priceContr.text, exContr.text);
+      var result = DatabaseHelper.intance.insert(model);
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => MyHomePage(title: "title"),
+      ));
+    }
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.blueGrey),
@@ -66,6 +80,7 @@ class AdminPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 10,right: 40,left: 40),
               child: TextFormField(
+                controller: nameContr,
                 keyboardType: TextInputType.name,
                 autofocus: false,
                 decoration: InputDecoration(
@@ -80,6 +95,7 @@ class AdminPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 20,right: 40,left: 40),
               child: TextFormField(
+                controller: priceContr,
                 keyboardType: TextInputType.number,
                 autofocus: false,
                 decoration: InputDecoration(
@@ -94,6 +110,7 @@ class AdminPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 20,right: 40,left: 40),
               child: TextFormField(
+controller: exContr,
                 keyboardType: TextInputType.name,
                 autofocus: true,
                 decoration: InputDecoration(
@@ -109,16 +126,20 @@ class AdminPage extends StatelessWidget {
                 padding: EdgeInsets.only(top: 35),
                 child: Center(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      sentDB();
+                    },
                     child: Text('Done'),
                   ),
                 )
             ),
           ],
         ),
-      )
+      ),
     );
+
   }
+
 }
 
 

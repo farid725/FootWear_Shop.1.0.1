@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:footwear_shop/Admin.dart';
+import 'package:footwear_shop/mainview.dart';
+import 'package:provider/provider.dart';
 
 class DrawerPage extends StatelessWidget {
   const DrawerPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    void taskItemList(context){
+      MainView mainProvider = Provider.of<MainView>(context, listen: false);
+      mainProvider.update();
+    }
     return Drawer(
       width: 250,
       child: ListView(
@@ -119,11 +125,12 @@ class DrawerPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 340,left: 20,right: 20),
+            padding: EdgeInsets.only(top: 330,left: 20,right: 20),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AdminPage(),));
-              },
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => AdminPage(),
+                )).then((value) => taskItemList(context)); },
               child: Container(
                 width: 150,
                 height: 25,
